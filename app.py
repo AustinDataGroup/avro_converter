@@ -1,29 +1,38 @@
 #! /usr/big/env python
 
 from avro import schema, datafile, io
-import pprint
+from optparse import OptionParser
 
-OUTFILE_NAME = 'data/regular_season_stats.avro'
-INFILE_NAME = 'csv/regular_season_results.csv'
+parser = OptionParser()
 
-pp = pprint.PrettyPrinter()
+parser.add_option('-s', '--source', dest='source',
+        help='The source csv file')
+parser.add_option('-d', '--dest', dest='dest',
+        help='The destination avro file')
+parser.add_option('-x', '--schema', dest='schema',
+        help='The schema file for parsing the csv into the avro file')
+parser.add_option('-n', '--header', dest='header',
+        help='If set, skips the first row because it is a header row',
+        action='store_false', default=False)
 
-SCHEMA_STR = """{
-    "type": "record",
-    "name": "Game",
-    "fields": [
-        { "name": "season", "type": "string"},
-        { "name": "daynum", "type": "string"},
-        { "name": "wteam_id", "type": "string"},
-        { "name": "wscore", "type": "string"},
-        { "name": "lteam_id", "type": "string"},
-        { "name": "lscore", "type": "string"},
-        { "name": "wloc", "type": "string"},
-        { "name": "numot", "type": "string"}
-    ]
-}"""
+(opts, args) = parser.parse_args()
+
+mandatory = ['source', 'dest', 'schema']
+for m in mandatory:
+    if not opts.__dict__[m]:
+        print 'Mandatory option' + m + 'is missing\n'
+        parser.print_help()
+        exit(-1)
+
+OUTFILE_NAME = opts.dest
+INFILE_NAME = opts.source
+SCHEMA_FILE = open(opts.schema, 'r')
+START_LINE = [0,1][opts.header]
+
+SCHEMA_STR = SCHEMA_FILE.read()
 
 SCHEMA = schema.parse(SCHEMA_STR)
+
 rec_writer = io.DatumWriter(SCHEMA)
 
 df_writer = datafile.DataFileWriter(
@@ -35,8 +44,12 @@ df_writer = datafile.DataFileWriter(
 in_file = open(INFILE_NAME, 'r')
 
 lines = in_file.read().splitlines()
-for num,line in enumerate(lines[1:]):
+for num,line in enumerate(lines[START_LINE:]):
     parts = line.split(',')
+
+    avro_parts = dict()
+    for num, field in enumerate(SCHEMA.fields):
+        avro_parts[field.name] = parts[num]
 
     avro_parts = dict({
         'season': parts[0],

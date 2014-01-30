@@ -1,0 +1,14 @@
+{
+    "type": "record",
+    "name": "Game",
+    "fields": [
+        { "name": "season", "type": "string"},
+        { "name": "daynum", "type": "string"},
+        { "name": "wteam_id", "type": "string"},
+        { "name": "wscore", "type": "string"},
+        { "name": "lteam_id", "type": "string"},
+        { "name": "lscore", "type": "string"},
+        { "name": "wloc", "type": "string"},
+        { "name": "numot", "type": "string"}
+    ]
+}
