@@ -5,13 +5,12 @@ This is a converter to turn .csv data files into .avro files
 
 ### To use
 
-place your CSV files inside the csv directory. If you have not already,
-create a schema with the same name inside the schemas directory.
-
 ```python
-  python app.py
+  python app.py -s SOURCE_FILE -d DESTINATION_FILE -x SCHEMA_FILE [-n]
 ```
 
-### Note
-Make sure your csv files have a header row because the python script
-expects one.
+### Options
+-s: Relative source csv file
+-d: File to save the avro data in
+-x: Schema file to load the structure of the avro file.
+-n: (OPTIONAL) parameter describing if the csv file has a header row.
