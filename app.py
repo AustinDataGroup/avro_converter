@@ -51,14 +51,4 @@ for num,line in enumerate(lines[START_LINE:]):
     for num, field in enumerate(SCHEMA.fields):
         avro_parts[field.name] = parts[num]
 
-    avro_parts = dict({
-        'season': parts[0],
-        'daynum': parts[1],
-        'wteam_id': parts[2],
-        'wscore': parts[3],
-        'lteam_id': parts[4],
-        'lscore': parts[5],
-        'wloc': parts[6],
-        'numot': parts[7]
-    })
     df_writer.append(avro_parts)
