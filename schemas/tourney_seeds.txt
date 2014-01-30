@@ -1,0 +1,9 @@
+{
+    "type": "record",
+    "name": "TourneySeed",
+    "fields": [
+        { "name": "season", "type": "string"},
+        { "name": "seed", "type": "string"},
+        { "name": "team_id", "type": "string"}
+    ]
+}

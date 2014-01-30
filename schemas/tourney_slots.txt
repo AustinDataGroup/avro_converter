@@ -1,0 +1,10 @@
+{
+    "type": "record",
+    "name": "TourneySlot",
+    "fields": [
+        { "name": "season", "type": "string"},
+        { "name": "slot", "type": "string"},
+        { "name": "strongseed", "type": "string"},
+        { "name": "weakseed", "type": "string"}
+    ]
+}

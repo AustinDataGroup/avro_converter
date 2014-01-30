@@ -1,0 +1,13 @@
+{
+    "type": "record",
+    "name": "Season",
+    "fields": [
+        { "name": "season", "type": "string"},
+        { "name": "years", "type": "string"},
+        { "name": "dayzero", "type": "string"},
+        { "name": "regionW", "type": "string"},
+        { "name": "regionX", "type": "string"},
+        { "name": "regionY", "type": "string"},
+        { "name": "regionZ", "type": "string"}
+    ]
+}
